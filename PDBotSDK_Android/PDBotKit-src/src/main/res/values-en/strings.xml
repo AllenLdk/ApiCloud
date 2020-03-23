@@ -1,0 +1,30 @@
+<resources>
+
+    <string name="pd_back">Back</string>
+    <string name="pd_send">Send</string>
+    <string name="pd_more">More</string>
+    <string name="pd_photo">Photos</string>
+    <string name="pd_camera">Camera</string>
+    <string name="pd_file">File</string>
+    <string name="pd_human">Human</string>
+    <string name="pd_message">Message</string>
+
+    <string name="pd_connecting">Connecting ...</string>
+    <string name="pd_connection_failed">Connection failed</string>
+    <string name="pd_connection_closed">Connection closed</string>
+
+    <string name="pd_yesterday">Yesterday</string>
+
+    <string name="pd_hold_to_talk">Hold to Talk</string>
+    <string name="pd_release_to_send">Release to Send</string>
+    <string name="pd_release_to_cancel">Release to cancel</string>
+    <string name="pd_slideup_and_cancel">Slide up to cancel</string>
+    <string name="pd_release_and_cancel">Release to cancel</string>
+
+    <string name="pd_unsupported_message">Unsupported message</string>
+
+    <string name="pd_message_menu">Menu</string>
+    <string name="pd_message_recommend">Do you want to ask</string>
+    <string name="pd_click_here">Click here</string>
+
+</resources>

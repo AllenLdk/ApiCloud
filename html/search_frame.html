@@ -1,0 +1,609 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>搜索Window</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+        header {
+
+            width: 100%;
+            height: 60px;
+            background-color:#EFE4B0;
+        }
+
+        header .left .back {
+            /*position: absolute;
+            bottom: 21px;
+            left: 11px;
+            width: 13px;
+            height: 8px;
+            background: url(../image/back.png);
+            background-size: 13px 8px;
+            background-position: center center;
+            background-repeat: no-repeat;
+            -webkit-transition: 200ms;
+            transition: 200ms;*/
+
+
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 60px;
+            background: url(../image/back.png);
+            background-position: 12px 16px;
+            background-size: 11px 18px;
+            background-repeat: no-repeat;
+        }
+        header .center {
+            /*position: relative;*/
+            /*width: 100%;*/
+            height: 60px;
+            background: url(../image/top.png);
+            background-size: 200px 100px;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+        header .right {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 40px;
+            height: 60px;
+            background: url(../image/cart.png);
+            background-size: 40px 40px;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+        .search {
+            width: 100%;
+            height: 33px;
+            line-height: 33px;
+            box-sizing: border-box;
+            padding-left: 10px;
+            padding-right: 25px;
+            font-size: 14px;
+            color: #999;
+            background-color: #fff;
+            /*border: 1px solid #e8e8e8;*/
+            border-radius: 6px;
+        }
+        .search_box {
+            position: absolute;;
+            width: 100%;
+            height: 50px;
+            background-color: #EFE4B0;
+            box-sizing: border-box;
+            padding-left: 10px;
+            padding-top: 8px;
+            padding-right: 15px;
+        }
+        .searchtubiao{
+          position: absolute;
+          top: 8px;
+          right: 19px;
+          width: 33px;
+          height: 33px;
+          background-image: url(../image/search.png);
+          background-size: 15px 15px;
+          background-repeat: no-repeat;
+          background-position: 15px center;
+        }
+
+/*
+        .ware-1 {
+            float: left;
+            margin-left: 4px;
+            position: relative;
+            width: 48%;
+            height: 188px;
+            box-sizing: border-box;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #d1d1d1;
+        }
+
+        .ware-1 .thumbnail {
+            position: absolute;
+            top: 20px;
+            left: 0px;
+            height: 100px;
+            width: 100%;
+        }
+
+        .ware-1 .info {
+            width: 100%;
+            height: 114px;
+            box-sizing: border-box;
+            margin-top: 90px;
+            padding-left: 2px;
+            padding-right: 28px;
+        }
+
+        .ware-1 .info .name {
+            padding-top: 17px;
+            width: 100%;
+            height: 15px;
+            color: #555555;
+            margin-top: 14px;
+            font-size: 15px;
+        }
+
+        .ware-1 .info .description {
+            margin-top: 10px;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            width: 100%;
+            height: 13px;
+            font-size: 13px;
+            color: #9d9d9d;
+        }
+
+        .ware-1 .info .price-tag {
+            margin-top: -18px;
+            width: 100%;
+            height: 12px;
+            font-size: 12px;
+            vertical-align: top;
+        }
+
+        .ware-1 .info .price-tag .price {
+            margin-top: 20px;
+            color: orangered;
+        }
+
+        .ware-1 .info .price-tag .unit {
+            font-size: 8px;
+            color: #cbcbcb;
+        }
+
+        .ware-1 .info .origin-price {
+            margin-top: 21px;
+            width: 100%;
+            height: 10px;
+            font-size: 10px;
+            color: #d3d3d3;
+        }
+
+        .ware .control {
+            position: absolute;
+            width: 110px;
+            height: 23px;
+            right: 8px;
+        }
+
+        .ware-1 .control {
+            right:0px;
+            top: 140px;
+        }
+
+        .ware .control .panel {
+            display: none;
+            height: 23px;
+        }
+
+        .ware .control .minus {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 23px;
+            height: 23px;
+            z-index: 2;
+        }
+
+        .ware .control .count {
+            position: relative;
+            top: 0;
+            margin-left: 31px;
+            margin-right: 31px;
+            width: auto;
+            height: 23px;
+            text-align: center;
+            line-height: 23px;
+            color: #444;
+            font-size: 12px;
+            background-image: url(../image/count.png);
+            background-repeat: no-repeat;
+            background-size: 48px 23px;
+        }
+
+        .ware .control .add {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 23px;
+            height: 23px;
+            z-index: 2;
+        }*/
+
+
+
+        .ware-1 {
+            position: relative;
+            width: 100%;
+            height: 145px;
+            box-sizing: border-box;
+            padding-top: 40px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #d1d1d1;
+        }
+
+        .ware-1 .thumbnail {
+            position: absolute;
+            top: 45px;
+            left: 0px;
+            height: 100px;
+            width: 100px;
+        }
+
+        .ware-1 .info {
+            width: 100%;
+            height: 114px;
+            box-sizing: border-box;
+            padding-left: 112px;
+            padding-right: 28px;
+        }
+
+        .ware-1 .info .name {
+            width: 100%;
+            height: 15px;
+            color: #555555;
+            margin-top: 14px;
+            font-size: 15px;
+        }
+
+        .ware-1 .info .description {
+            margin-top: 10px;
+            width: 100%;
+            height: 13px;
+            font-size: 13px;
+            color: #9d9d9d;
+        }
+
+        .ware-1 .info .price-tag {
+            margin-top: 10px;
+            width: 100%;
+            height: 12px;
+            font-size: 12px;
+            vertical-align: top;
+        }
+
+        .ware-1 .info .price-tag .price {
+            color: #e3007f;
+        }
+
+        .ware-1 .info .price-tag .unit {
+            font-size: 8px;
+            color: #cbcbcb;
+        }
+
+        .ware-1 .info .origin-price {
+            margin-top: 5px;
+            width: 100%;
+            height: 10px;
+            font-size: 10px;
+            color: #d3d3d3;
+        }
+
+        .ware .control {
+            position: absolute;
+            width: 110px;
+            height: 23px;
+            right: 8px;
+        }
+
+        .ware-0 .control {
+            bottom: 8px;
+        }
+
+        .ware-1 .control {
+            top: 90px;
+        }
+
+        .ware .control .panel {
+            display: none;
+            height: 23px;
+        }
+
+        .ware .control .minus {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 23px;
+            height: 23px;
+            z-index: 2;
+        }
+
+        .ware .control .count {
+            position: relative;
+            top: 0;
+            margin-left: 31px;
+            margin-right: 31px;
+            width: auto;
+            height: 23px;
+            text-align: center;
+            line-height: 23px;
+            color: #444;
+            font-size: 12px;
+            background-image: url(../image/count.png);
+            background-repeat: no-repeat;
+            background-size: 48px 23px;
+        }
+
+        .ware .control .add {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 23px;
+            height: 23px;
+            z-index: 2;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header id="header">
+        <div class="left">
+          <div class="back" tapmode onclick="api.closeWin();"></div>
+        </div>
+        <div class="center"></div>
+        <div class="right" tapmode onclick="fnOpenPersonalCenterWin();"></div>
+    </header>
+    <div id="search">
+        <div class="search_box" id="search_box">
+            <input class="search" id="searchContent">
+            <span class="searchtubiao" onclick="fnSearchWareList();"></span>
+        </div>
+    </div>
+    <section id="searchContentList">
+
+    </section>
+</body>
+<script type="text/template" id="template">
+    {{~it:value:index}} {{?0 == value.showType}}
+    <div class="ware ware-0">
+        <div class="content" tapmode onclick="fnOpenWareWin('{{=value.id}}');">
+            <img onload="fnLoadImage(this)" data-url="{{=value.thumbnail.url}}" class="thumbnail" src="../image/default_rect.jpg">
+            <div class="info">
+                <span class="price">{{=value.price}}</span>
+                <span class="unit">/{{=value.unit}}</span>
+                <span class="origin-price">&nbsp;原价:<del>{{=value.originPrice}}元</del></span>
+            </div>
+            <div class="control">
+                <div class="panel" id="panel_{{=value.id}}">
+                    <img class="minus" src="../image/minx.png" tapmode onclick="fnMinus('{{=value.id}}');">
+                    <div class="count" id="count_{{=value.id}}">1</div>
+                </div>
+                <img class="add" src="../image/add.png" tapmode onclick="fnAdd('{{=value.id}}');">
+            </div>
+        </div>
+    </div>
+    {{??}}
+    <div class="ware ware-1">
+        <div class="content" tapmode onclick="fnOpenWareWin('{{=value.id}}');">
+            <img onload="fnLoadImage(this)" data-url="{{=value.thumbnail.url}}" class="thumbnail" src="../image/default_square.jpg">
+            <div class="info">
+                <div class="name">{{=value.name}}</div>
+                <div class="description">{{=value.description}}</div>
+                <div class="price-tag">
+                    <span class="price">￥{{=value.price}}</span>
+                    <span class="unit">/{{=value.unit}}</span>
+                </div>
+                <div class="origin-price">原价:
+                    <del>{{=value.originPrice}}元</del>
+                </div>
+            </div>
+            <div class="control">
+                <div class="panel" id="panel_{{=value.id}}">
+                    <img class="minus" src="../image/minx.png" tapmode onclick="fnMinus('{{=value.id}}');">
+                    <div class="count" id="count_{{=value.id}}">0</div>
+                </div>
+                <img class="add" src="../image/add.png" tapmode onclick="fnAdd('{{=value.id}}');">
+            </div>
+        </div>
+    </div>
+    {{?}} {{~}}
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/db.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+
+        // 初始化事件监听
+        initEventListenner();
+        var header = $api.byId('header');
+        var search = $api.byId('search');
+
+        // 实现沉浸式状态栏效果
+        $api.fixStatusBar(header);
+
+        // 计算header和nav元素的高度
+        headerH = $api.offset(header).h;
+        searchH = $api.offset(search).h;
+
+    };
+    var searchContent=$api.byId('searchContent');
+    // 初始化事件监听
+    function initEventListenner() {
+
+        // 拦截Android的返回键，在首页点击返回键，提示退出应用
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err) {
+            if(ret){
+              api.openWin({
+                  name: 'main',
+                  url: './main.html',
+                  pageParam: {
+                      name: 'test'
+                  }
+              });
+
+            }
+        });
+    }
+    var now = Date.now();
+    var appKey = SHA1("A6095455169448"+"UZ"+"43B270EB-CB1F-BC5E-E563-53AAD72382A5"+"UZ"+now)+"."+now
+    function fnSearchWareList(){
+      var params = {
+          fields: {},
+          where: {
+              "name":{"like":[searchContent.value]}
+          },
+          skip: 0,
+          limit: 5
+      }
+      params = $api.jsonToStr(params);
+      api.ajax({
+          url: 'http://d.apicloud.com/mcm/api/ware?filter=' + params,
+          method: 'get',
+          headers: {
+              "X-APICloud-AppId": "A6095455169448",
+              "X-APICloud-AppKey": appKey
+          }
+      },function(ret, err){
+          if (ret) {
+              var list = $api.byId('searchContentList');
+
+              // 编译模板函数
+              var tempFn = doT.template($api.byId('template').innerHTML);
+
+              // 使用模板函数生成HTML文本
+              var resultHTML = tempFn(ret);
+
+              $api.append(list, resultHTML);
+
+              // alert( JSON.stringify( ret ) );
+          } else {
+              alert( JSON.stringify( err ) );
+          }
+      });
+
+    }
+
+    // 实现商品列表的图片缓存
+    function fnLoadImage(ele_) {
+        var dataUrl = $api.attr(ele_, 'data-url');
+
+        // 缓存data-url所指定的图片
+        if (dataUrl) {
+            api.imageCache({
+                url: dataUrl
+            }, function(ret, err) {
+                if (ret) {
+                    ele_.src = ret.url;
+                    $api.attr(ele_, 'data-url', '');
+                }
+            });
+        }
+    }
+
+    // 打开商品详情Window，指定商品Id
+    function fnOpenWareWin(wareId_) {
+
+        // 当点击修改商品数量按钮的时候，并不去打开商品详情窗口
+        if (event.target.className == 'minus' || event.target.className == 'add') {
+            return;
+        }
+
+        // 获取指定商品在购物车中的数量
+        var count = $api.byId('count_' + wareId_);
+        var wareCount = parseInt(count.innerHTML);
+        api.openWin({
+            name: 'ware',
+            url: './ware.html',
+            pageParam: {
+                wareId: wareId_,
+                wareCount: wareCount
+            },
+            animation: {
+                type: "fade"
+            }
+        });
+    }
+    function InitSearchContentList(){
+
+    }
+    function SearchHistory(){
+
+    }
+
+    // 添加到购物车按钮的监听函数
+    function fnAdd(wareId_) {
+
+        // 阻止事件继续向上冒泡
+        event.stopPropagation();
+
+        var count = $api.byId('count_' + wareId_);
+        var panel = $api.byId('panel_' + wareId_);
+
+        // 更新商品数量及显示状态
+        var countNumber = parseInt(count.innerHTML);
+        countNumber += 1;
+        count.innerHTML = countNumber;
+        panel.style.display = (countNumber > 0) ? 'block' : 'none';
+
+        // 发送购物车更新自定义事件，传递商品Id和商品数量
+        api.sendEvent({
+            name: 'updateShoppingCart',
+            extra: {
+                wareId: wareId_,
+                wareCount: countNumber
+            }
+        });
+    }
+
+    // 从购物车删除按钮的监听函数
+    function fnMinus(wareId_) {
+        event.stopPropagation();
+        var count = $api.byId('count_' + wareId_);
+        var panel = $api.byId('panel_' + wareId_);
+        var countNumber = parseInt(count.innerHTML);
+        countNumber -= 1;
+        count.innerHTML = countNumber;
+        panel.style.display = (countNumber > 0) ? 'block' : 'none';
+        api.sendEvent({
+            name: 'updateShoppingCart',
+            extra: {
+                wareId: wareId_,
+                wareCount: countNumber
+            }
+        });
+    }
+
+    // 显示商品在购物车中的数量
+    function fnShowWareCountInShoppingCart(data_) {
+      // 遍历商品列表
+      var i = 0
+      if (data_.length) {
+        $db.select(data_[i].id, selectCallback);
+      }
+
+      function selectCallback(ret, err) {
+        if (ret && ret.data.length > 0) {
+            // 获得商品在购物车中的数量，更新数量和状态
+            var wareCount = ret.data[0].wareCount;
+            var count = $api.byId('count_' + data_[i].id);
+            var panel = $api.byId('panel_' + data_[i].id);
+            count.innerHTML = wareCount;
+            panel.style.display = (wareCount > 0) ? 'block' : 'none';
+        }
+
+        ++ i
+
+        if (i < data_.length) {
+            $db.select(data_[i].id, selectCallback)
+        }
+      }
+    }
+</script>
+
+</html>

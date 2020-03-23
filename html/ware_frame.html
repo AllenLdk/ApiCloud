@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>商品详情Frame</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+        html,
+        body {
+            height: 100%;
+            min-height: 100%;
+        }
+
+        section {
+            height: 100%;
+        }
+
+        .info-name {
+            box-sizing: border-box;
+            width: 100%;
+            height: 70px;
+            padding-top: 8px;
+            padding-left: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .info-name .name {
+            width: 100%;
+            height: 24px;
+            line-height: 24px;
+            color: #444;
+            font-size: 18px;
+        }
+
+        .info-name .description {
+            width: 100%;
+            height: 20px;
+            line-height: 20px;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .info-price {
+            box-sizing: border-box;
+            width: 100%;
+            height: 150px;
+            padding-top: 8px;
+            padding-left: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .info-price .price {
+            width: 100%;
+            height: 24px;
+            line-height: 24px;
+            color: #21a6d7;
+            font-size: 24px;
+            font-weight: bolder;
+        }
+
+        .info-price .other {
+            color: #444
+        }
+
+        .info-price .other div {}
+
+        .info-price .other .origin-price {
+            margin-top: 10px;
+        }
+
+        .info-price .other .unit {
+            margin-top: 10px;
+        }
+
+        .info-price .other .place {
+            margin-top: 10px;
+        }
+
+        .info-discount {
+            width: 100%;
+            height: 0px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .info-discount .name {
+            padding-top: 8px;
+            padding-left: 8px;
+            padding-bottom: 20px;
+            display: inline-block;
+            width: auto;
+            color: #444;
+        }
+
+        .info-discount .value {
+            padding-top: 8px;
+            padding-bottom: 8px;
+            display: inline-block;
+            width: auto;
+            height: 15px;
+            line-height: 15px;
+            margin-top: 3px;
+            padding: 4px;
+            border-radius: 15px;
+            box-shadow: 0 1px 1px 1px #eee;
+            color: #fff;
+            background-color: #21a6d7;
+        }
+
+        .push {
+            position: relative;
+            box-sizing: border-box;
+            padding-top: 8px;
+            width: 100%;
+            height: 60px;
+            text-align: center;
+            color: #888;
+            font-size: 12px;
+        }
+
+        .push .top {
+            height: 24px;
+            line-height: 24px;
+        }
+
+        .push .bottom {
+            height: 20px;
+            line-height: 20px;
+        }
+
+        li {
+            list-style-type: none;
+        }
+        /*留言板*/
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrap {
+            width: 100%px;
+            height: 880px;
+            margin: 0 auto;
+            box-shadow: 10px 10px 30px #ccc;
+            border-radius: 2px;
+            padding: 10px;
+            position: relative;
+            top: 50px;
+        }
+
+        .says {
+            width: 100%;
+            height: 200px;
+            position: absolute;
+        }
+
+        .says h1 {
+            font-size: 18px;
+            color: #A8A8A8;
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            outline: none;
+            resize: none;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 5px;
+            padding-right: 10px;
+            color: #660000;
+        }
+        input {
+            width: 80px;
+            height: 30px;
+            border: none;
+            cursor: pointer;
+            background: #00CC66;
+            color: white;
+            border-radius: 2px;
+            position: absolute;
+            right: 10px;
+            bottom: 5px;
+            transition: all ease 0.4s;
+            font-size: 16px;
+        }
+
+        input:hover {
+            filter: alpha(opaciyt: 70);
+            opacity: 0.7;
+        }
+
+        ul {
+            width: 100%;
+            height: 640px;
+            position: absolute;
+            bottom: 0;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+
+        li {
+            width: 100%;
+            border-bottom: 1px dotted #ccc;
+            list-style: none;
+            line-height: 57px;
+            font-size: 14px;
+            color: #606060;
+            overflow: hidden;
+            filter: alpha(opacity: 0);
+            opacity: 0;
+        }
+
+        span {
+            float: right;
+            margin-right: 30px;
+        }
+
+        .errmsg {
+            font-size: 14px;
+            color: red;
+            font-weight: bold;
+            filter: alpha(opacity: 0);
+            opacity: 0;
+        }
+
+        a {
+            font-size: 14px;
+            color: #990000;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        a:hover {
+            color: red;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div id="picture" class="picture"></div>
+        <div class="info-name">
+            <div id="wareName" class="name">佳沛绿奇异果</div>
+            <div id="description" class="description">享受清爽汁水融入齿间感觉</div>
+        </div>
+        <div class="info-price">
+            <div id="price" class="price">¥18.9</div>
+            <div class="other">
+                <div class="origin-price">
+                    <del id="originPrice">原价：¥99.8</del>
+                </div>
+                <div id="unit" class="unit">规格：4件</div>
+                <div id="detail" class="place">产地：中国</div>
+            </div>
+        </div>
+        <div class="info-discount">
+            <div class="name">超值优惠：</div>
+            <div class="value">全场买三送一</div>
+        </div>
+        <!-- <div class="push">
+            <div class="top">“亚当和夏娃都无法抵挡的禁果诱惑”</div>
+            <div class="bottom">下滑查看商品详情</div>
+        </div> -->
+    </section>
+    <footer>
+        <div class="wrap">
+            <div class="says">
+                <h1>来啦！老弟，有啥想说的评论出来哦...</h1>
+                <textarea>填写您的评论</textarea><input type="button" value="发布">
+                <div class="errmsg">请填写内容后再发布！</div>
+            </div>
+            <ul>
+
+            </ul>
+        </div>
+    </footer>
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+        // 初始化轮播图模块
+        initUIScrollPicture();
+
+        // 获取商品详情数据
+        getWareInfo(api.pageParam.wareId);
+    };
+
+    var UIScrollPicture;
+
+    function initUIScrollPicture() {
+
+        // 获取占位的div元素，并设置元素的宽高
+        var picture = $api.byId('picture');
+        picture.style.width = api.winWidth + 'px';
+        picture.style.height = api.winWidth + 'px';
+        var rect = $api.offset(picture);
+
+        // 引入UIScrollPicture模块，并指定位置和宽高
+        UIScrollPicture = api.require('UIScrollPicture');
+        UIScrollPicture.open({
+            rect: {
+                x: rect.l,
+                y: rect.t,
+                w: rect.w,
+                h: rect.h
+            },
+            data: {
+                paths: [
+                    'widget://image/default_rect.png',
+                    'widget://image/default_rect.png'
+                ]
+            },
+            styles: {
+                caption: {
+                    height: 35,
+                    color: '#E0FFFF',
+                    size: 13,
+                    bgColor: '#696969',
+                    position: 'bottom'
+                },
+                indicator: {
+                    align: 'center',
+                    color: '#FFFFFF',
+                    activeColor: '#DA70D6'
+                }
+            },
+            placeholderImg: 'widget://image/default_rect.png',
+            contentMode: 'scaleToFill',
+            interval: 5,
+            fixedOn: api.frameName,
+            loop: true,
+            fixed: false
+        }, function(ret, err) {
+            if (ret) {
+                //alert(JSON.stringify(ret));
+            } else {
+                //alert(JSON.stringify(err));
+            }
+        });
+    }
+
+
+    function getWareInfo(wareId_) {
+        api.showProgress({
+            style: 'default',
+            animationType: 'fade',
+            title: '努力加载中...',
+            text: '先喝杯茶...',
+            modal: false
+        });
+        var params = {
+            fields: {},
+            where: {
+                id: wareId_
+            },
+            skip: 0,
+            limit: 1,
+            include: ['wareInfoPointer']
+        }
+        params = $api.jsonToStr(params);
+        var appId = "A6095455169448";
+        var now = Date();
+        var appKey = SHA1("A6095455169448" + "UZ" + "43B270EB-CB1F-BC5E-E563-53AAD72382A5" + "UZ" + now) + "." + now;
+        api.ajax({
+            url: 'http://d.apicloud.com/mcm/api/ware?filter=' + params,
+            method: 'get',
+            headers: {
+                "X-APICloud-AppId": appId,
+                "X-APICloud-AppKey": appKey
+            }
+        }, function(ret, err) {
+            if (ret) {
+                api.hideProgress();
+                // 更新商品详情展示
+                fnUpdateWareInfo(ret[0]);
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+    }
+
+    // 更新商品详情展示
+    function fnUpdateWareInfo(ware_) {
+
+        // 商品名称
+        var wareName = $api.byId('wareName');
+        wareName.innerHTML = ware_.name;
+
+        // 商品描述
+        var description = $api.byId('description');
+        description.innerHTML = ware_.description;
+
+        // 商品价格
+        var price = $api.byId('price');
+        price.innerHTML = '￥' + ware_.price;
+
+        // 商品原价
+        var originPrice = $api.byId('originPrice');
+        originPrice.innerHTML = '原价：￥' + ware_.originPrice;
+
+        // 商品规格
+        var unit = $api.byId('unit');
+        unit.innerHTML = '单位：' + ware_.unit;
+
+        // 商品产地
+        var detail = $api.byId('detail');
+        detail.innerHTML = '描述：' + ware_.wareInfo.detail;
+
+
+        // 更新轮播图中的图片
+        var paths = [];
+        for (var i = 0; i < 6; i++) {
+            if (ware_.wareInfo['picture' + i]) {
+                paths.push(ware_.wareInfo['picture' + i].url);
+            }
+        }
+        UIScrollPicture.reloadData({
+            data: {
+                paths: paths
+            }
+        });
+    }
+
+    // 实现留言板功能
+    window.onload = function() {
+        var oWrap = document.getElementsByClassName("wrap")[0];
+        var oTextarea = oWrap.getElementsByTagName("textarea")[0];
+        var oBtn = oWrap.getElementsByTagName("input")[0];
+        var oUl = oWrap.getElementsByTagName("ul")[0];
+        var errMsg = oWrap.getElementsByClassName("errmsg")[0];
+        var oA = document.getElementsByTagName("a");
+        //console.log(oA);
+        var t = new Date();
+        var Year = t.getFullYear();
+        var Month = t.getMonth() + 1;
+        var Day = t.getDate();
+        var Hours = t.getHours();
+        var Minutes = t.getMinutes();
+        var Scondes = t.getSeconds();
+        var timers = toString(Year) + "年" + toString(Month) + "月" + toString(Day) + "日" + toString(Hours) + ":" + toString(Minutes) + ":" + toString(Scondes); //将获取到的日期对象拼接。
+        //console.log(timers);
+
+        function toString(n) //数字转字符串
+        {
+            if (n < 9) {
+                n = "0" + n;
+            } else {
+                n = "" + n;
+            }
+            return n;
+        };
+
+        oBtn.onclick = function() {
+            if (oTextarea.value == "") {
+                startMove(errMsg, {
+                    opacity: 100
+                });
+                //console.log(errMsg.style.opacity)
+                oTextarea.select();
+            } else {
+                var aLi = document.createElement("li");
+                var aSpan = document.createElement("span");
+                //console.log(aLi);
+                //console.log(aSpan);
+                //oUl.appendChild(aLi);
+                //aLi.appendChild(aSpan);
+                aLi.innerHTML = oTextarea.value;
+                aSpan.innerHTML = timers + "<a href='javascript:;' title='删除这条信息'>删除</a>";
+                //aSpan.innerHTML="<a href='javascript:;'>删除</a>"
+                if (oUl.children.length > 0) {
+                    oUl.insertBefore(aLi, oUl.children[0]);
+                    aLi.appendChild(aSpan);
+                    oTextarea.value = "";
+                } else {
+                    oUl.appendChild(aLi);
+                    aLi.appendChild(aSpan);
+                    oTextarea.value = "";
+                };
+                var aLiHeight = parseInt(getStyle(aLi, "height"));
+                //console.log(aLiHeight);
+                aLi.style.height = "0";
+                startMove(aLi, {
+                    height: aLiHeight
+                }, function() {
+                    startMove(aLi, {
+                        opacity: 100
+                    });
+                });
+                delLi(); //添加数据后加载删除模块
+            }
+        };
+
+        function delLi() {
+            for (var i = 0; i < oA.length; i++) {
+                oA[i].onclick = function() {
+                    liNode = this.parentNode.parentNode //获取到当前A标签的父节点，也就是LI
+                    var aLiHeight = parseInt(getStyle(liNode, "height")) + 1;
+                    //console.log(aLiHeight);
+                    //链式运动操作：先进行透明化，再进行高度变小，最后删除DOM元素
+                    startMove(liNode, {
+                        opacity: 0
+                    }, function() {
+                        startMove(liNode, {
+                            height: 0
+                        }, function() {
+                            oUl.removeChild(liNode);
+                        });
+                    });
+                }
+            }
+        }
+    };
+
+    //运动框架
+    function startMove(obj, json, endFn) {
+        clearInterval(obj.timer);
+        obj.timer = setInterval(
+            function() {
+
+                var iStop = true;
+                for (var curr in json) {
+                    var oNumber = 0;
+                    if (curr == "opacity") {
+                        oNumber = Math.round(parseFloat(getStyle(obj, curr)) * 100);
+                    } else {
+                        oNumber = parseInt(getStyle(obj, curr));
+                    }
+                    var speed = (json[curr] - oNumber) / 6;
+                    speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+                    if (oNumber != json[curr])
+                        iStop = false;
+                    if (curr == "opacity") {
+                        obj.style.filter = "alpha(opacity:" + (oNumber + speed) + ")";
+                        obj.style.opacity = (oNumber + speed) / 100;
+                    } else {
+                        obj.style[curr] = oNumber + speed + "px";
+                    }
+                };
+                if (iStop) {
+                    clearInterval(obj.timer);
+                    if (endFn) endFn();
+                }
+            }, 30);
+    };
+
+    //获取非行间样式
+    function getStyle(obj, name) {
+        if (obj.currentStyle) {
+            obj = currentStyle[name];
+        } else {
+            obj = getComputedStyle(obj, false)[name];
+        }
+        return obj;
+    };
+</script>
+
+</html>

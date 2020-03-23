@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>注册Frame</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link href="../css/jquery.idcode.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript">
+    </script>
+    <style>
+        .row {
+            box-sizing: border-box;
+            width: auto;
+            height: 70px;
+            margin-left: 32px;
+            margin-right: 32px;
+            padding-top: 40px;
+            border-bottom: 1px solid #888;
+        }
+
+        .input {
+            width: 100%;
+            height: 20px;
+            line-height: 20px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .btn {
+            width: auto;
+            height: 50px;
+            margin-left: 32px;
+            margin-right: 32px;
+            margin-top: 32px;
+            background-color: #e7a22b;
+            color: #3e4447;
+            font-size: 24px;
+            line-height: 50px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .highlight {
+            opacity: 0.7;
+        }
+
+        .ui-dialog-content {
+            padding: 15px 20px;
+        }
+
+        .ui-dialog-pt15 {
+            padding-top: 15px;
+        }
+
+        .ui-dialog-l40 {
+            height: 40px;
+            line-height: 40px;
+            text-align: right;
+        }
+
+        .ui-dialog-input {
+            width: 100%;
+            height: 40px;
+            margin: 0px;
+            padding: 0px;
+            border: 1px solid #d5d5d5;
+            font-size: 16px;
+            color: #c1c1c1;
+            text-indent: 25px;
+            outline: none;
+        }
+
+        .ui-dialog-input-username {
+            background: url(images/input_username.png) no-repeat 2px;
+        }
+
+        .ui-dialog-input-password {
+            background: url(images/input_password.png) no-repeat 2px;
+        }
+
+        .ui-dialog-submit {
+            width: 100%;
+            height: 50px;
+            background: #3b7ae3;
+            border: none;
+            font-size: 16px;
+            color: #fff;
+            outline: none;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            line-height: 50px;
+        }
+
+        .ui-dialog-submit:hover {
+            background: #3f81b0;
+        }
+
+        .ui-mask {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            position: absolute;
+            top: 0px;
+            height: 0px;
+            z-index: 8000;
+            opacity: 0.4;
+            filter: Alpha(opacity=40);
+        }
+
+        .sub {
+            margin-top: 20px;
+        }
+
+        .sure {
+            height: 40px;
+            width: 100%;
+            padding-bottom: 20px;
+        }
+
+        .sure input {
+            width: 70%;
+            height: 40px;
+            background-color: #f6f1f1;
+        }
+
+        .sure span {
+            padding-left: 10px;
+        }
+
+        #code {
+            width: 26%;
+            margin-left: 10px;
+        }
+        .bg{
+          background-image: url(../image/bg.jpg);
+          height: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ui-dialog-content">
+        <div class="ui-dialog-l40 ui-dialog-pt15">
+            <input class="ui-dialog-input ui-dialog-input-username" id="username" type="input" placeholder="请输入用户名" value="" />
+        </div>
+        <div class="ui-dialog-l40 ui-dialog-pt15">
+            <input class="ui-dialog-input ui-dialog-input-password" id="password" type="input" placeholder="请输入密码" value="" />
+        </div>
+        <div class="sure"><br>
+            <input type="text" id="inputcode" class="txtVerification" placeholder="请输入验证码"><input type="button" id="code" onclick="createCode();" value="点击生成验证码"></input>
+        </div>
+        <div class="sub">
+            <a class="ui-dialog-submit" href="#" onclick="fnRegister();">注册</a>
+        </div>
+        <div class="bg"></div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/APICloud-rest.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
+<script type="text/javascript">
+    // 验证码
+    var code;
+
+    function createCode() {
+        code = "";
+        var codeLength = 6;
+        var checkCode = document.getElementById("code");
+        var random = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+        for (var i = 0; i < codeLength; i++) {
+            var index = Math.floor(Math.random() * 6);
+            code += random[index];
+        }
+        checkCode.value = code;
+    }
+
+
+
+    apiready = function() {
+        fnInitUIInput();
+    };
+
+    var UIInput;
+    var usernameUIInputId;
+    var passwordUIInputId;
+    var usernameValue;
+    var passwordValue;
+
+
+    function fnInitUIInput() {
+        // 用户名输入框模块
+        var username = $api.byId('username');
+        var usernameRect = $api.offset(username);
+        UIInput = api.require('UIInput');
+        UIInput.open({
+            rect: {
+                x: usernameRect.l,
+                y: usernameRect.t,
+                w: usernameRect.w,
+                h: usernameRect.h
+            },
+            styles: {
+                bgColor: '#f6f1f1',
+                size: 16,
+                color: '#000',
+                placeholder: {
+                    color: '#ccc'
+                }
+            },
+            autoFocus: false,
+            maxRows: 1,
+            placeholder: '请输入用户名',
+            keyboardType: 'default',
+            fixedOn: api.frameName
+        }, function(ret, err) {
+            if (ret) {
+                usernameUIInputId = ret.id;
+                if (ret && ret.eventType == "show") {
+                    setTimeout(function() {
+                        UIInput.popupKeyboard({
+                            id: usernameUIInputId
+                        });
+                    }, 200);
+                } else if (ret.eventType == "change") {
+                    UIInput.value({
+                        id: usernameUIInputId
+                    }, function(ret, err) {
+                        if (ret) {
+                            if (ret.status) {
+                                usernameValue = ret.msg;
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+        // 密码输入框模块
+        var password = $api.byId('password');
+        var passwordRect = $api.offset(password);
+        UIInput.open({
+            rect: {
+                x: passwordRect.l,
+                y: passwordRect.t,
+                w: passwordRect.w,
+                h: passwordRect.h
+            },
+            styles: {
+                bgColor: '#f6f1f1',
+                size: 16,
+                color: '#000',
+                placeholder: {
+                    color: '#ccc'
+                }
+            },
+            autoFocus: false,
+            maxRows: 1,
+            placeholder: '请输入密码',
+            keyboardType: 'default',
+            inputType: 'password',
+            fixedOn: api.frameName
+        }, function(ret, err) {
+            if (ret) {
+                passwordUIInputId = ret.id;
+                if (ret.eventType == "change") {
+                    UIInput.value({
+                        id: passwordUIInputId
+                    }, function(ret, err) {
+                        if (ret) {
+                            if (ret.status) {
+                                passwordValue = ret.msg;
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    // 如果使用APICloud数据云，可以使用APICloud数据云前端框架来简化网络通信
+    function fnRegisterByAPICloudMCM() {
+        if (!usernameValue) {
+            if (api.systemType == 'android') {
+                setTimeout(function() {
+                    UIInput.popupKeyboard({
+                        id: usernameUIInputId
+                    });
+                }, 200);
+            } else {
+                UIInput.popupKeyboard({
+                    id: usernameUIInputId
+                });
+            }
+            return;
+        }
+        if (!passwordValue) {
+            if (api.systemType == 'android') {
+                setTimeout(function() {
+                    UIInput.popupKeyboard({
+                        id: passwordUIInputId
+                    });
+                }, 200);
+            } else {
+                UIInput.popupKeyboard({
+                    id: passwordUIInputId
+                });
+            }
+            return;
+        }
+
+        // 使用APICloud MCM JS Framework来与数据云通信
+        var client = new Resource("A6095455169448", "43B270EB-CB1F-BC5E-E563-53AAD72382A5");
+        var User = client.Factory("user");
+        User.save({
+            "username": usernameValue,
+            "password": passwordValue
+        }, function(ret, err) {
+            api.alert({
+                title: '提示',
+                msg: '注册成功',
+            }, function(ret, err) {
+                if (ret) {
+                    // 跨窗口执行Script, 将用户名传给登录页面
+                    api.execScript({
+                        name: 'login',
+                        frameName: 'login_frame',
+                        script: 'fnSetUsername(\"' + usernameValue + '\");'
+                    });
+                    api.closeWin();
+                } else {
+                    alert("注册失败，用户名已被占用");
+                }
+            });
+        })
+    }
+
+    // 注册
+    function fnRegister() {
+        // 验证验证码
+        var inputcode = document.getElementById("inputcode").value;
+        var code = document.getElementById("code").value;
+        if (inputcode == code) {
+            var appId = "A6095455169448";
+            var now = Date();
+            var appKey = SHA1("A6095455169448" + "UZ" + "43B270EB-CB1F-BC5E-E563-53AAD72382A5" + "UZ" + now) + "." + now;
+            api.ajax({
+                url: 'https://d.apicloud.com/mcm/api/user',
+                method: 'post',
+                headers: {
+                    "X-APICloud-AppId": appId,
+                    "X-APICloud-AppKey": appKey
+                },
+                data: {
+                    values: {
+                        "username": usernameValue,
+                        "password": passwordValue
+                    }
+                }
+            }, function(ret, err) {
+                if (ret && ret.id) {
+                    api.alert({
+                        title: '提示',
+                        msg: '注册成功',
+                    }, function(ret, err) {
+                        if (ret) {
+                            // 跨窗口执行Script, 将用户名传给登录页面
+                            api.execScript({
+                                name: 'login',
+                                frameName: 'login_frame',
+                                script: 'fnSetUsername(\"' + usernameValue + '\");'
+                            });
+                            api.closeWin();
+                        }
+                    });
+                } else {
+                    api.toast({
+                        msg: '注册失败，用户名已被占用',
+                        duration: 2000,
+                        location: 'middle'
+                    });
+                }
+            });
+        } else {
+            alert("验证码输入有误，请重新输入！");
+            createCode();
+        }
+
+}
+</script>
+
+</html>
